@@ -10,22 +10,58 @@ import 'bootstrap';
 // user to manually enter the exchg rate
 
 async function getConversion(amt, targetCurrency){
+  try{
+    if(amt === ''){
+      throw new Error('Error: Please enter a valid amount.');
+    }
+    if(targetCurrency === ''){
+      throw new Error('Error: Please select a valid currency.');
+    }
+
+    const response = await CurrencyService.getExchangeRates();
+    if(typeof response === 'undefined'){
+      throw new Error('Error: the API call was unsuccessful.');
+    }
+    else{
+      const rate = response.conversion_rates[targetCurrency];
+      return (amt*rate).toFixed(2);
+    }
+  }
+
+  catch(error){
+    return error;
+  }
   
-  const response = await CurrencyService.getExchangeRates();
-  const rate = response.conversion_rates[targetCurrency];
-  return (amt*rate).toFixed(2);
 }
+
+async function getCurrencyList(){
+  try{
+    const response = await CurrencyService.getExchangeRates();
+    if( typeof response === "undefined"){
+      throw new Error('Error: the API call was unsuccessful.');
+    }
+    else{
+      return response.conversion_rates;
+    }
+  }
+  catch(error){
+      console.log(error.message);
+    }    
+}
+
+
 
 function displayConversion(event){
   event.preventDefault();
-  const amt = document.getElementById('amount').value;
-  const targetCurrency = document.getElementById('targetCurrency').value;
+  const amt = parseFloat(document.getElementById('amt').value);
+  const targetCurrency = document.getElementById('available-currencies').value;
   getConversion(amt, targetCurrency)
-    .then(function(response){
-      if(response instanceof Error){
-        console.log(response.message); //display error and message
+    .then(function(conversion){
+      if(typeof conversion === 'undefined'){
+        const failedConversionAttempt = conversion;
+        document.getElementById('results').innerHTML=failedConversionAttempt.message; //display error and message
       } else {
-        document.getElementById('result').innerHTML = `Your conversion is ${response} ${targetCurrency}`;
+        document.getElementById('results').innerHTML = `Your conversion is ${conversion} ${targetCurrency}`;
       }
     });
 
@@ -33,17 +69,18 @@ function displayConversion(event){
 
 
 window.addEventListener('load', async function(){
-  const form = document.getElementById('currency-form');
+  const form = document.getElementById('to-convert');
+  form.addEventListener('submit', displayConversion);
   try{
-    let response = await CurrencyService.getExchangeRates();
-    if(response instanceof undefined){
+    const availableCurrencies = await getCurrencyList();
+    if(typeof availableCurrencies === 'undefined'){
       throw new Error('Error');
     }
-    Dropdown.updateDropdown(response.conversion_rates);
+    else{
+      Dropdown.updateDropdown(availableCurrencies);
+    }
   }
   catch(error){
     console.log('error');
   }
-
-  form.addEventListener('submit', displayConversion);
 });
