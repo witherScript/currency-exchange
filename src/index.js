@@ -1,4 +1,4 @@
-import Person from './js/person.js';
+import CurrencyService from './js/currency-service.js';
 import './css/styles.css';
 import 'bootstrap';
 
@@ -7,6 +7,14 @@ import 'bootstrap';
 // the dropdown field
 // if the currency is unavailable, have an "other" option that allows the
 // user to manually enter the exchg rate
+
+async function getConversion(amt, targetCurrency){
+  
+  const response = await CurrencyService.getExchangeRates();
+  const rate = response.conversion_rates[targetCurrency];
+  return (amt*rate).toFixed(2);
+}
+
 
 window.addEventListener('load', function(){
   //TODO
