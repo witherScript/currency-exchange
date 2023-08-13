@@ -1,0 +1,12 @@
+body{
+    background-color: blue;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+input[type="text"]{
+    width: 200px;
+}

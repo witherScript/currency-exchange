@@ -1,4 +1,5 @@
 import CurrencyService from './js/currency-service.js';
+import Dropdown from './js/currencyDropdownConfig.js';
 import './css/styles.css';
 import 'bootstrap';
 
@@ -15,7 +16,34 @@ async function getConversion(amt, targetCurrency){
   return (amt*rate).toFixed(2);
 }
 
+function displayConversion(event){
+  event.preventDefault();
+  const amt = document.getElementById('amount').value;
+  const targetCurrency = document.getElementById('targetCurrency').value;
+  getConversion(amt, targetCurrency)
+    .then(function(response){
+      if(response instanceof Error){
+        console.log(response.message); //display error and message
+      } else {
+        document.getElementById('result').innerHTML = `Your conversion is ${response} ${targetCurrency}`;
+      }
+    });
 
-window.addEventListener('load', function(){
-  //TODO
-})
+}
+
+
+window.addEventListener('load', async function(){
+  const form = document.getElementById('currency-form');
+  try{
+    let response = await CurrencyService.getExchangeRates();
+    if(response instanceof undefined){
+      throw new Error('Error');
+    }
+    Dropdown.updateDropdown(response.conversion_rates);
+  }
+  catch(error){
+    console.log('error');
+  }
+
+  form.addEventListener('submit', displayConversion);
+});

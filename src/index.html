@@ -8,8 +8,23 @@
 </head>
 
 <body>
+  
+  <!--header and description-->
+  <navbar>
+    <h1>Currency Exchange Calculator</h1>
+    <span>Calculate exchange between USD and live-updated exchange rates!</span> <img src="https://www.ecb.europa.eu/shared/img/flags/USD.gif" alt="USD flag">
+  </navbar>
+  <form id="to-convert">
+    <label for="conversion-amt">Enter an amount in USD: </label>
+    <input type="text" id="currency">
+    <label for="convert-to"></label>
+    <select id="available-currencies">
+    </select>
+    <button type="submit">Convert</button>
+  </form>
+  
 
-
+  <script src="./index.js"></script>
 </body>
 
 </html>
