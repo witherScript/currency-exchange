@@ -1,8 +1,8 @@
 import CurrencyService from './js/currency-service.js';
 import Dropdown from './js/currencyDropdownConfig.js';
 import CustomError from './js/handle-error.js';
-import './css/styles.css';
 import 'bootstrap';
+import './css/styles.css';
 
 //on implementing call to currency exchange,
 // call currencyDropDownConfig to update the html with the currencies on
@@ -25,13 +25,13 @@ async function getConversion(amt, targetCurrency){
     }
     else{
       if (!response.conversion_rates || !response.conversion_rates[targetCurrency]) {
-        throw new CustomError("unsupported-code", "Unsupported currency code");
+        throw new CustomError("Unsupported currency code");
       }
       const rate = response.conversion_rates[targetCurrency];
       return [(amt * rate).toFixed(2), true];
     } 
     
-  }catch (error) {
+  } catch (error) {
     CustomError.handleError(error);
     return [error, false];
   }
@@ -62,8 +62,13 @@ function displayConversion(event) {
   const targetCurrency = document.getElementById('available-currencies').value;
   getConversion(amt, targetCurrency)
     .then(function(conversion) {
-      if (conversion[1] === true) {
+      if (conversion[1] === true && conversion[0]!=='NaN') {
         document.getElementById('results').innerHTML = `Your conversion is ${conversion[0]} ${targetCurrency}`;
+      }
+      else{
+        document.getElementById('results').setAttribute('class', 'alert alert-danger');
+        document.getElementById('results').innerHTML = 'This operation could not be completed';
+        
       }
     });
 }
