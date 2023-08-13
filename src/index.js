@@ -1,5 +1,6 @@
 import CurrencyService from './js/currency-service.js';
 import Dropdown from './js/currencyDropdownConfig.js';
+import CustomError from './js/handle-error.js';
 import './css/styles.css';
 import 'bootstrap';
 
@@ -23,16 +24,20 @@ async function getConversion(amt, targetCurrency){
       throw new Error('Error: the API call was unsuccessful.');
     }
     else{
+      if (!response.conversion_rates || !response.conversion_rates[targetCurrency]) {
+        throw new CustomError("unsupported-code", "Unsupported currency code");
+      }
       const rate = response.conversion_rates[targetCurrency];
-      return (amt*rate).toFixed(2);
-    }
-  }
-
-  catch(error){
-    return error;
+      return [(amt * rate).toFixed(2), true];
+    } 
+    
+  }catch (error) {
+    CustomError.handleError(error);
+    return [error, false];
   }
   
 }
+  
 
 async function getCurrencyList(){
   try{
@@ -51,22 +56,17 @@ async function getCurrencyList(){
 
 
 
-function displayConversion(event){
+function displayConversion(event) {
   event.preventDefault();
   const amt = parseFloat(document.getElementById('amt').value);
   const targetCurrency = document.getElementById('available-currencies').value;
   getConversion(amt, targetCurrency)
-    .then(function(conversion){
-      if(typeof conversion === 'undefined'){
-        const failedConversionAttempt = conversion;
-        document.getElementById('results').innerHTML=failedConversionAttempt.message; //display error and message
-      } else {
-        document.getElementById('results').innerHTML = `Your conversion is ${conversion} ${targetCurrency}`;
+    .then(function(conversion) {
+      if (conversion[1] === true) {
+        document.getElementById('results').innerHTML = `Your conversion is ${conversion[0]} ${targetCurrency}`;
       }
     });
-
 }
-
 
 window.addEventListener('load', async function(){
   const form = document.getElementById('to-convert');
@@ -74,13 +74,14 @@ window.addEventListener('load', async function(){
   try{
     const availableCurrencies = await getCurrencyList();
     if(typeof availableCurrencies === 'undefined'){
-      throw new Error('Error');
+      throw new Error('An Error Occurred in accessing the API.');
     }
     else{
       Dropdown.updateDropdown(availableCurrencies);
     }
   }
   catch(error){
-    console.log('error');
+    this.document.querySelector('span#error-description').innerHTML = error.message;
+    
   }
 });

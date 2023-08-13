@@ -10,3 +10,14 @@ body{
 input[type="text"]{
     width: 200px;
 }
+
+.hidden{
+    display: none;
+}
+
+div#error-container{
+    background-color: red;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
