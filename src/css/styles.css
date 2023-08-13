@@ -1,0 +1,82 @@
+/*
+
+
+
+*/
+
+
+body {
+  background-color: #f1f1f1;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Style the header */
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+}
+
+/* Style the age form */
+.age-form {
+  margin: 20px;
+  border: 1px solid #ccc;
+  float: left;
+  width: 100%;
+  background-color: #f1f1f1;
+  padding-bottom: 20px;
+}
+
+/* Style the input fields */
+.age-form input {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Style the submit button */
+
+.age-form button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.age-form button:hover {
+  opacity: 0.8;
+}
+
+/* Clear floats after the columns */
+.age-form:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+@media (max-width: 600px) {
+  .age-form {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+
+
+
+
+
+/* Add padding to containers */
