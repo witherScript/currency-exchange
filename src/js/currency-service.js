@@ -9,12 +9,11 @@ export default class CurrencyService {
 					const errorMessage = `${response.status} ${response.statusText}`;
 					throw new Error(errorMessage);
 				} else {
-					return response.json();
+						return response.json();
 				}
 			})
 			.catch(function (error) {
 				return error;
-			});
-	}  
-
+		});
+	}  	
 }
