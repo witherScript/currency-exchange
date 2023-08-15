@@ -53,7 +53,9 @@ console.log(process.env.API_KEY); // Output: <your_API_key>
 ```bash
 $ git clone https://github.com/witherScript/currency-exchange
 ```
-3. Install project dependencies using npm [Node Package Manager installation instructions](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+3. Install project dependencies using npm*
+   
+* to install npm, follow the instructions on this link -> [Node Package Manager installation instructions](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 
 ```bash
 $ npm install
