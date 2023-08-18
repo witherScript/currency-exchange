@@ -3,7 +3,6 @@ pull api response, process json,
 if currencies are available, dynamically update the dropdown field accordingly
 */
 
-
 export default class Dropdown{
   static updateDropdown(currencyObj){
     let currencyList = Object.keys(currencyObj);

@@ -2,7 +2,6 @@ export default class CustomError extends Error {
   constructor(message){
     super(message);
   }
-
   static handleError(error) {
     const errorCode = document.getElementById('error-code');
     const errorContainer = document.getElementById('error-message');

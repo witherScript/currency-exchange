@@ -2,7 +2,8 @@ import CurrencyService from './js/currency-service.js';
 import Dropdown from './js/currencyDropdownConfig.js';
 import CustomError from './js/handle-error.js';
 import 'bootstrap';
-import './css/styles.css';
+import './css/styles.css'; 
+
 
 //on implementing call to currency exchange,
 // call currencyDropDownConfig to update the html with the currencies on
@@ -50,7 +51,7 @@ async function getCurrencyList(){
     }
   }
   catch(error){
-      console.log(error.message);
+      document.getElementById('error-container').classList.remove('hidden'); 
     }    
 }
 

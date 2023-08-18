@@ -26,11 +26,11 @@
 ### This project includes the dotenv dependency. 
 ### Here is how to use it to protect your API Key.
 
-1. Create a .env file in your project's root dir (add to your .gitignore)
+1. Create a .env file in your project's root dir
 ```bash
 $ ~ cd Your-Project
 
-$ mkdir .env
+$ touch .env
 
 ```
 2. add the following line to your .env file:
